@@ -2,15 +2,15 @@ server.port: 8080
 
 spring:
   profiles.default: postgres
-#  jpa.properties.hibernate.hbm2ddl.import_files_sql_extractor: org.hibernate.tool.schema.internal.script.MultiLineSqlScriptExtractor
+  jpa.properties.hibernate.hbm2ddl.import_files_sql_extractor: org.hibernate.tool.schema.internal.script.MultiLineSqlScriptExtractor
   h2.console.enabled: false
-  sql.init.mode: always
+  sql.init.mode: never
 
 spring.jpa.defer-datasource-initialization: true
 spring.jpa:
   show-sql: true
   generate-ddl: true
-  hibernate.ddl-auto: create
+#  hibernate.ddl-auto: create
 
 #spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
 
@@ -22,3 +22,6 @@ logging:
     com.softserve.itacademy: INFO
 
 logging.file.name: logs/todolist.log
+
+
+

@@ -27,7 +27,7 @@ public class TaskController {
     private final StateService stateService;
     private final TaskTransformer taskTransformer;
 
-    // TODO: can create todo if is owner or collaborator
+    @PreAuthorize("hasAuthority('ADMIN') or @toDoController.canReadToDo(#todoId)")
     @GetMapping("/create/todos/{todo_id}")
     public String create(@PathVariable("todo_id") long todoId, Model model) {
         model.addAttribute("task", new TaskDto());
@@ -36,7 +36,7 @@ public class TaskController {
         return "create-task";
     }
 
-    // TODO: can create todo if is owner or collaborator
+    @PreAuthorize("hasAuthority('ADMIN') or @toDoController.canReadToDo(#todoId)")
     @PostMapping("/create/todos/{todo_id}")
     public String create(@PathVariable("todo_id") long todoId, Model model,
                          @Validated @ModelAttribute("task") TaskDto taskDto, BindingResult result) {
@@ -52,7 +52,7 @@ public class TaskController {
         return "redirect:/todos/" + todoId + "/read";
     }
 
-    // TODO: only if is owner or collaborator
+    @PreAuthorize("hasAuthority('ADMIN') or toDoController.canReadToDo(#todoId)")
     @GetMapping("/{task_id}/update/todos/{todo_id}")
     public String taskUpdateForm(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId, Model model) {
         TaskDto taskDto = taskTransformer.convertToDto(taskService.readById(taskId));
@@ -62,7 +62,7 @@ public class TaskController {
         return "update-task";
     }
 
-    // TODO: only if is owner or collaborator
+    @PreAuthorize("hasAuthority('ADMIN') or @toDoController.canReadToDo(#todoId)")
     @PostMapping("/{task_id}/update/todos/{todo_id}")
     public String update(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId, Model model,
                          @Validated @ModelAttribute("task") TaskDto taskDto, BindingResult result) {
@@ -82,7 +82,7 @@ public class TaskController {
         return "redirect:/todos/" + todoId + "/read";
     }
 
-    // TODO: only if is owner or collaborator
+    @PreAuthorize("hasAuthority('ADMIN') or @toDoController.canReadToDo(#todoId)")
     @GetMapping("/{task_id}/delete/todos/{todo_id}")
     public String delete(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId) {
         taskService.delete(taskId);

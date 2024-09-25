@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/todolist
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: ${DB_PASS:1111}
+    password: admin
